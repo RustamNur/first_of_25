@@ -1,3 +1,8 @@
+body {
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+
 .acc-wrapper {
   display: flex;
   height: 100vh;
@@ -10,7 +15,7 @@
 
 .acc-wrapper button {
   padding: 10px 20px;
-  background: #6b6d6c;
+  background: #01612c;
   color: #fff;
   font-weight: bold;
   font-size: 20px;

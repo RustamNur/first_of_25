@@ -2,25 +2,32 @@ import React, { useState } from "react";
 import "./Styles.css";
 import data from "./data.js";
 
+// Single selection
+// Multiple Selection
 const Index = () => {
   const [selected, setSelected] = useState(null);
-  const [enableMultiSelection, setEnableMultiSelection] = useState(false);
+  const [enableMultiSelection, setEnableMultiSlection] = useState(false);
   const [multiple, setMultiple] = useState([]);
 
-  const handleSingleSelection = (getCurretId) => {
-    setSelected(getCurretId === selected ? null : getCurretId);
+  const handleSingleSelection = (getCurrentId) => {
+    setSelected(getCurrentId === selected ? null : getCurrentId);
   };
 
   const handleMultiSelection = (getCurrentId) => {
-    let copyMutiple = [...multiple];
-    const findIndexOfCurrentId = copyMutiple.indexOf(getCurrentId);
+    let copyMultiple = [...multiple];
+    const findIndexOfCurrentId = copyMultiple.indexOf(getCurrentId);
+    console.log(findIndexOfCurrentId);
+    if (findIndexOfCurrentId === -1) copyMultiple.push(getCurrentId);
+    else copyMultiple.slice(findIndexOfCurrentId, 1);
+
+    setMultiple(copyMultiple);
   };
 
+  console.log(selected, multiple);
   return (
     <div className="acc-wrapper">
-      <h3>Accordion Component</h3>
-      <button onClick={() => setEnableMultiSelection(!enableMultiSelection)}>
-        Enable Multi Selection
+      <button onClick={() => setEnableMultiSlection(!enableMultiSelection)}>
+        Enable Multiple Selection
       </button>
       <div className="accordian">
         {data && data.length > 0 ? (
@@ -37,13 +44,27 @@ const Index = () => {
                 <h3>{dataItem.question}</h3>
                 <span>+</span>
               </div>
-              {selected === dataItem.id ? (
-                <div className="acc-content">{dataItem.answer}</div>
-              ) : null}
+              {enableMultiSelection
+                ? multiple.indexOf(dataItem.id) !== -1 && (
+                    <div className="acc-content">
+                      <p>{dataItem.answer}</p>
+                    </div>
+                  )
+                : selected === dataItem.id && (
+                    <div className="acc-content">
+                      <p>{dataItem.answer}</p>
+                    </div>
+                  )}
+              {/* {selected === dataItem.id ||
+              multiple.indexOf(dataItem.id) !== -1 ? (
+                <div className="acc-content">
+                  <p>{dataItem.answer}</p>
+                </div>
+              ) : null} */}
             </div>
           ))
         ) : (
-          <div>No data found !</div>
+          <div>No Data Found !</div>
         )}
       </div>
     </div>
